@@ -4,6 +4,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ *
+ *
+ * Binary Search Tree Test
+ *
+ * https://www.tutorialspoint.com/data_structures_algorithms/tree_data_structure.htm
+ *
+ *
+ * print structure code
+ *
+ * from https://stackoverflow.com/questions/4965335/how-to-print-binary-tree-diagram
+ *
+ * add :insert
+ */
 public class BTreePrinterTest {
 
 
@@ -30,6 +44,9 @@ public class BTreePrinterTest {
         BTreePrinter.insert(root, new Node<Integer>(5));
         BTreePrinter.insert(root, new Node<Integer>(8));
         BTreePrinter.printNode(root);
+
+        Node rsNode = BTreePrinter.search(root, 6);
+        BTreePrinter.printNode(rsNode);
     }
 }
 
@@ -50,6 +67,11 @@ class BTreePrinter {
         printNodeInternal(Collections.singletonList(root), 1, maxLevel);
     }
 
+    /**
+     * added by dg 2019-04-10 18:30
+     * @param root
+     * @param newNode
+     */
     public static void insert(Node root, Node newNode){
         if(root == null){
             root = newNode;
@@ -75,6 +97,25 @@ class BTreePrinter {
         }
     }
 
+    public static Node search(Node root, int value){
+        System.out.println("search for :"+ value);
+        if (root == null){
+            return null;
+        }
+        Node curNode = root;
+        while (curNode.data.compareTo(value) != 0){
+            System.out.println("cur:"+curNode.data);
+            if (curNode.data.compareTo(value) > 0){
+                curNode = curNode.left;
+            }else{
+                curNode = curNode.right;
+            }
+            if (curNode == null) {
+                return null;//not found
+            }
+        }
+        return curNode;
+    }
     private static <T extends Comparable<?>> void printNodeInternal(List<Node<T>> nodes, int level, int maxLevel) {
         if (nodes.isEmpty() || BTreePrinter.isAllElementsNull(nodes))
             return;
