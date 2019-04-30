@@ -1,49 +1,17 @@
 package com.test;
 
-class  Test{
-    private static boolean isStop;
-    public  static  void main(String[] args) throws InterruptedException {
-        StringBuffer sf = new StringBuffer();
-        for (int i = 0; i < 300; i++) {
-            sf.append("test").append(i).append("ceshi");
-        }
+import java.util.Date;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
+class Test {
+    private static String str;
 
+    public static void main(String[] args) {
+        long timestamp = 1549854968938L;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//        Thread thread = new Thread(new Runnable() {
-//            public void run() {
-//                int i = 0;
-//                while (!isStop){
-//                    i++;
-//                    System.out.println(i);
-//                    try {
-//                        TimeUnit.SECONDS.sleep(1);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//        });
-//        thread.start();
-//
-//        TimeUnit.SECONDS.sleep(3);
-//
-//        isStop = true;
+        System.out.println(new Date(timestamp));
     }
+
+
 }
