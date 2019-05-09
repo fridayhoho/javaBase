@@ -39,9 +39,9 @@ public class TestSendMQ {
                         channel.queueDeclare(QUEUE_NAME, false, false, false, null);
 //                            String message = "S00000000008";
                         String message = "030{PSDRF00388,01,{T01:21:00,T02:20:00,T03:20:00,T11:21:00,E01:0:00,E02:0:00,E03:0:00,E11:451:02,}}";
-                        if (Math.round(Math.random()) % 2 == 0) {
+//                        if (Math.round(Math.random()) % 2 == 0) {
                             message = "S00000000008";
-                        }
+//                        }
                         channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
                         System.out.println("send2MQ:" + message);
 
