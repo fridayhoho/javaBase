@@ -38,10 +38,14 @@ public class TestSendMQ {
                     try (Channel channel = conn.createChannel()) {
                         channel.queueDeclare(QUEUE_NAME, false, false, false, null);
 //                            String message = "S00000000008";
-                        String message = "030{PSDRF00388,01,{T01:21:00,T02:20:00,T03:20:00,T11:21:00,E01:0:00,E02:0:00,E03:0:00,E11:451:02,}}";
+//                        PSDRF00388
+                        String message = "030{6666666666,01,{T01:21:00,T02:20:00,T03:20:00,T11:21:00,E01:0:00,E02:0:00,E03:0:00,E11:451:02,}}";
 //                        if (Math.round(Math.random()) % 2 == 0) {
-                            message = "S00000000008";
+//                            message = "S00000000008";
 //                        }
+//                        message = "030{ANXZH00001,02,{T01:27:00,T02:27:00,T03:28:00,T11:0:04,E01:0.0:00,E02:4.1:00,E03:0.0:00,E11:1100:02,}}";
+//                        message = "030{ANXZH00001,02,{T01:27:00,T02:250:02,T03:28:00,T11:0:04,E01:0.0:00,E02:4.1:00,E03:0.0:00,E11:1100:02,}}";
+                            message = "G01000000001";
                         channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
                         System.out.println("send2MQ:" + message);
 
@@ -50,7 +54,8 @@ public class TestSendMQ {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
+                    executors.shutdown();
+                    System.exit(0);
                 });
             }
         } catch (TimeoutException e) {
