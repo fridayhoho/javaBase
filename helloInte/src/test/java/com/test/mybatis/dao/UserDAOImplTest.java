@@ -1,5 +1,6 @@
 package com.test.mybatis.dao;
 
+import com.test.mybatis.mapper.PlayerQueryMapper;
 import com.test.mybatis.pojo.User;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
@@ -11,6 +12,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -34,4 +38,18 @@ public class UserDAOImplTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void findUserByIdAno() {
+        try {
+            PlayerQueryMapper playerQueryMapper = (PlayerQueryMapper)applicationContext.getBean("playerQueryMapper");
+            List result = playerQueryMapper.doSomeSummary();
+
+            System.out.println(result);
+            assertTrue(!result.isEmpty());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

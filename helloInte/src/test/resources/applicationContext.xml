@@ -30,5 +30,10 @@
     <bean id="userDAO" class="com.test.mybatis.dao.UserDAOImpl">
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
     </bean>
+    <!-- Mapper 扫描器 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!-- 扫描 包下的组件 -->
+        <property name="basePackage" value="com.test.mybatis.mapper"/>
+    </bean>
 </beans>
 
