@@ -43,9 +43,9 @@ public class TestSendMQ {
 //                        if (Math.round(Math.random()) % 2 == 0) {
 //                            message = "S00000000008";
 //                        }
-//                        message = "030{ANXZH00001,02,{T01:27:00,T02:27:00,T03:28:00,T11:0:04,E01:0.0:00,E02:4.1:00,E03:0.0:00,E11:1100:02,}}";
+                        message = "030{ANXZH00001,02,{T01:27:00,T02:27:00,T03:28:00,T11:0:04,E01:0.0:00,E02:4.1:00,E03:0.0:00,E11:1100:02,}}";
 //                        message = "030{ANXZH00001,02,{T01:27:00,T02:250:02,T03:28:00,T11:0:04,E01:0.0:00,E02:4.1:00,E03:0.0:00,E11:1100:02,}}";
-                            message = "G01000000001";
+                            message = "S01000000366";
                         channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
                         System.out.println("send2MQ:" + message);
 

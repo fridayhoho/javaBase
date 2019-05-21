@@ -8,7 +8,9 @@ public class TestString {
     }
     static int i = 99;
     public static void main(String[] args) {
-        String ghost = "hello";
-        ghost += " java";
+//        String ghost = "hello";
+//        ghost += " java";
+        int testI = 200* 300* 400* 500;
+        System.out.println(Integer.MAX_VALUE);
     }
 }

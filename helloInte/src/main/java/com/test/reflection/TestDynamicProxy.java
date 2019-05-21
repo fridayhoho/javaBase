@@ -1,23 +1,25 @@
 package com.test.reflection;
 
 import java.lang.reflect.Proxy;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TestDynamicProxy {
     public static void main(String[] args) {
-        Map mapProxyInstance = (Map) Proxy.newProxyInstance(
-                TestDynamicProxy.class.getClassLoader(), new Class[]{Map.class},
-                new TimingDynamicInvocationHandler(new HashMap<>()));
+        List mapProxyInstance = (List) Proxy.newProxyInstance(
+                TestDynamicProxy.class.getClassLoader(), new Class[]{List.class},
+                new TimingDynamicInvocationHandler(new ArrayList<>()));
 
-        mapProxyInstance.put("hello", "world");
+        mapProxyInstance.add("test");
 
-        CharSequence csProxyInstance = (CharSequence) Proxy.newProxyInstance(
-                TestDynamicProxy.class.getClassLoader(),
-                new Class[]{CharSequence.class},
-                new TimingDynamicInvocationHandler("Hello World"));
-
-        csProxyInstance.length();
+//        CharSequence csProxyInstance = (CharSequence) Proxy.newProxyInstance(
+//                TestDynamicProxy.class.getClassLoader(),
+//                new Class[]{CharSequence.class},
+//                new TimingDynamicInvocationHandler("Hello World"));
+//
+//        csProxyInstance.length();
 
     }
 }
