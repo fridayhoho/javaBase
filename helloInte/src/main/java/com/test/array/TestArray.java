@@ -1,8 +1,11 @@
 package com.test.array;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.core.util.ArrayUtils;
 
 import java.rmi.ConnectIOException;
+import java.util.BitSet;
+import java.util.Collections;
 import java.util.Random;
 
 /**
@@ -15,7 +18,8 @@ import java.util.Random;
 @Slf4j
 public class TestArray {
     public static void main(String[] args) {
-        findTheMissedOne(generateArrWithMissedOne());
+//        findTheMissedOne(generateArrWithMissedOne());
+        findThoseMissed(generateArrWithMissedSome());
     }
 
     /**
@@ -39,6 +43,37 @@ public class TestArray {
         return arr;
     }
 
+
+    private static boolean isInArray(int[] arr, int ele) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == ele) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 送你一个数组，少几个数，服不服
+     *
+     * @return
+     */
+    private static int[] generateArrWithMissedSome() {
+        int[] arr = new int[10];
+        int[] indexs = new int[]{new Random().nextInt(10), new Random().nextInt(10), new Random().nextInt(10)};
+
+        for (int i = 0; i < 10; i++) {
+            if (isInArray(indexs, i)) {
+                log.info("the missed one:{}", i);
+                continue;
+            }
+            arr[i] = i;
+        }
+        log.info("arr:{}", arr);
+
+        return arr;
+    }
+
     /**
      * 缺谁了啊 兄die
      *
@@ -52,5 +87,24 @@ public class TestArray {
             totalTobe += i;
         }
         log.info("the missed one:{}", totalTobe - total);
+    }
+
+    /**
+     * 找出缺的好几个
+     *
+     * @param arr
+     */
+    private static void findThoseMissed(int[] arr) {
+        BitSet bitSet = new BitSet(arr.length);
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] != 0) {
+                bitSet.set(i);
+            }
+        }
+        int lastMissedIdx = 0;
+        for (int i = 0; i < bitSet.length(); i++) {
+            lastMissedIdx = bitSet.nextClearBit(lastMissedIdx );
+            log.info("missed:{}", lastMissedIdx);
+        }
     }
 }
