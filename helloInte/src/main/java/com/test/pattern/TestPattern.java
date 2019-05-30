@@ -1,5 +1,6 @@
 package com.test.pattern;
 
+import java.text.DateFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -31,11 +32,21 @@ public class TestPattern {
 		System.out.println("year:"+t2046.getYear()+" month:"+t2046.getMonth());
 		System.out.println("2046:"+t2046 + " now:"+now);
 		long days = ChronoUnit.MONTHS.between(now, t2046);
-		System.out.println(days);
-		Set<String> allZoneIds = ZoneId.getAvailableZoneIds();
-		Iterator iterator = allZoneIds.iterator();
+		System.out.println("======");
+//		Set<String> allZoneIds = ZoneId.getAvailableZoneIds();
+//		Iterator iterator = allZoneIds.iterator();
 //		while (iterator.hasNext()){
 ////			System.out.println(iterator.next());
 //		}
+		LocalDate marriedDate = LocalDate.parse("2008-05-10", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		long distanDays = ChronoUnit.DAYS.between(marriedDate, LocalDate.now());
+		System.out.println("嫁给我:"+distanDays+" 天了");
+
+		LocalDate toSz = LocalDate.parse("2015-05-01", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		System.out.println("来深圳:"+ChronoUnit.DAYS.between(toSz, LocalDate.now())+" 天了");
+
+		LocalDate herBirth = LocalDate.parse("1982-10-03", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		LocalDate meBirth = LocalDate.parse("1980-05-04", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		System.out.println("我出生后:"+ChronoUnit.DAYS.between(meBirth, herBirth)+" 天，你出生了");
 	}
 }
