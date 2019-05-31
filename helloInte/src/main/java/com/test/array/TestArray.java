@@ -34,8 +34,10 @@ public class TestArray {
 //		findDuplicate(new int[]{3, 1, 4, 9, 114, 2, 1});
 //		System.out.println(missingNumber(new int[]{3, 0, 1}));
 //		System.out.println(missingNumber(new int[]{3, 2, 1}));
-		int[] pivotArr = new int[]{2, 7, 3, 6, 5, 6, 12};
-		System.out.println(pivotIndex(pivotArr));
+//		int[] pivotArr = new int[]{2, 7, 3, 6, 5, 6, 12};
+//		System.out.println(pivotIndex(pivotArr));
+		System.out.println(dominantIndex(new int[]{3, 6, 1, 0}));
+		System.out.println(dominantIndex(new int[]{1, 0}));
 	}
 
 	/**
@@ -246,10 +248,39 @@ public class TestArray {
 			}
 			if (sumL == sumR) {
 				return i;
-			}else {
+			} else {
 				sumR = 0;
 			}
 			sumL += nums[i];
+		}
+		return -1;
+	}
+
+	public static int dominantIndex(int[] nums) {
+		if (nums == null || nums.length == 0){
+			return -1;
+		}
+		if(nums.length == 1){
+			return 0;
+		}
+		int[] nums2 = Arrays.copyOf(nums, nums.length);
+		Arrays.sort(nums);
+		int maxOne = 0;
+		int maxSecond = 0;
+		for (int i = nums.length - 1; i >= 0; i--) {
+			if (i - 1 >= 0 && nums[i] != nums[i - 1]) {
+				maxOne = nums[i];
+				maxSecond = nums[i - 1];
+				break;
+			}
+		}
+		if (maxSecond * 2 <= maxOne) {
+			for(int i=0;i<nums2.length;i++){
+				if(nums2[i]==maxOne){
+					return i;
+				}
+			}
+
 		}
 		return -1;
 	}
