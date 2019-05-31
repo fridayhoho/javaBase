@@ -30,7 +30,10 @@ public class TestArray {
 //			System.out.println(rs[i]);
 //		}
 		int[] duplicateArrOneMissedDup = new int[]{1, 3, 2, 2, 1, 1, 8, 3};
-		int missDup = findTheMissDuplicateOne(duplicateArrOneMissedDup);
+//		int missDup = findTheMissDuplicateOne(new int[]{1, 3, 1, 3, 4});
+//		findDuplicate(new int[]{3, 1, 4, 9, 114, 2, 1});
+		System.out.println(missingNumber(new int[]{3,0, 1}));
+		System.out.println(missingNumber(new int[]{3,2, 1}));
 	}
 
 	/**
@@ -199,12 +202,35 @@ public class TestArray {
 	 */
 	public static int findTheMissDuplicateOne(int[] arr) {
 		assert (arr != null && arr.length > 0);
-		int missDup = arr[0];
+		int missDup = 0;
 		for (int i = 0; i < arr.length; i++) {
-			System.out.print(arr[i]+" ");
+			System.out.print(arr[i] + " ");
 			missDup = missDup ^ arr[i];
 		}
-		System.out.println("不重复的是:"+missDup);
+		System.out.println("不重复的是:" + missDup);
 		return missDup;
+	}
+
+	public static int findDuplicate(int[] nums) {
+		assert (nums != null || nums.length > 0);
+		Arrays.sort(nums);
+		for (int i = 0; i < nums.length; i++) {
+			if (i+1 < nums.length&&(nums[i] ^ nums[i+1]) == 0){
+				System.out.println("重复的是:"+nums[i]);
+				return nums[i];
+			}
+		}
+		System.out.println("no重复");
+		return -1;//no dup
+	}
+
+	public static int missingNumber(int[] nums) {
+		int total = 0;
+		for(int i=0;i< nums.length;i++){
+			total += nums[i];
+		}
+		int theMax = nums.length;
+		int totalS = (theMax * (nums.length+1))/2;
+		return totalS - total;
 	}
 }
