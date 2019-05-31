@@ -22,7 +22,15 @@ public class TestArray {
 //        findTheMissedOne(generateArrWithMissedOne());
 //		int[] targetArr = generateArrWithMissedSome(10, 3);
 //		findThoseMissed(targetArr, 3);
-		printMissingNumber(new int[]{2, 5, 4, 10, 9, 7}, 10);
+//		printMissingNumber(new int[]{2, 5, 4, 10, 9, 7}, 10);
+		int[] duplicateArr = new int[]{1, 3, 2, 2, 1, 1, 8, 3};
+//		findDumplicate(duplicateArr);
+//		int[] rs = removeDuplicates(duplicateArr);
+//		for (int i = 0; i < rs.length; i++) {
+//			System.out.println(rs[i]);
+//		}
+		int[] duplicateArrOneMissedDup = new int[]{1, 3, 2, 2, 1, 1, 8, 3};
+		int missDup = findTheMissDuplicateOne(duplicateArrOneMissedDup);
 	}
 
 	/**
@@ -121,10 +129,9 @@ public class TestArray {
 
 	/**
 	 * 要求前提： 索引 = 数字-1
-	 *
+	 * <p>
 	 * 如果是 125~190 间找出缺少的数字呢？
 	 *
-	 * 
 	 * @param numbers
 	 * @param count
 	 */
@@ -142,5 +149,62 @@ public class TestArray {
 		}
 	}
 
+	public static void findDumplicate(int[] arr) {
+		BitSet bitSet = new BitSet();
+		BitSet bitSetDup = new BitSet();
+		int duplicateCount = 0;
+		int[] duplicates = new int[arr.length];
+		for (int i = 0; i < arr.length; i++) {
+			if (!bitSet.get(arr[i])) {
+				bitSet.set(arr[i]);
+				continue;
+			}
+			duplicateCount++;
+			bitSetDup.set(arr[i] - 1);
 
+
+		}
+		int nextDupIndex = 0;
+		System.out.println("重复的有:");
+		for (int i = 0; i < duplicateCount; i++) {
+			nextDupIndex = bitSetDup.nextSetBit(nextDupIndex);
+			nextDupIndex++;
+			System.out.println(arr[nextDupIndex]);
+		}
+	}
+
+	public static int[] removeDuplicates(int[] numbersWithDuplicates) {
+		Arrays.sort(numbersWithDuplicates);
+
+		int[] result = new int[numbersWithDuplicates.length];
+		int previous = numbersWithDuplicates[0];
+		result[0] = previous;
+
+		for (int i = 1; i < numbersWithDuplicates.length; i++) {
+			int ch = numbersWithDuplicates[i];
+
+			if (previous != ch) {
+				result[i] = ch;
+			}
+			previous = ch;
+		}
+		return result;
+	}
+
+	/**
+	 * 找出不重复那个
+	 *
+	 * @param arr
+	 * @return
+	 */
+	public static int findTheMissDuplicateOne(int[] arr) {
+		assert (arr != null && arr.length > 0);
+		int missDup = arr[0];
+		for (int i = 0; i < arr.length; i++) {
+			System.out.print(arr[i]+" ");
+			missDup = missDup ^ arr[i];
+		}
+		System.out.println("不重复的是:"+missDup);
+		return missDup;
+	}
 }
