@@ -32,8 +32,10 @@ public class TestArray {
 		int[] duplicateArrOneMissedDup = new int[]{1, 3, 2, 2, 1, 1, 8, 3};
 //		int missDup = findTheMissDuplicateOne(new int[]{1, 3, 1, 3, 4});
 //		findDuplicate(new int[]{3, 1, 4, 9, 114, 2, 1});
-		System.out.println(missingNumber(new int[]{3,0, 1}));
-		System.out.println(missingNumber(new int[]{3,2, 1}));
+//		System.out.println(missingNumber(new int[]{3, 0, 1}));
+//		System.out.println(missingNumber(new int[]{3, 2, 1}));
+		int[] pivotArr = new int[]{2, 7, 3, 6, 5, 6, 12};
+		System.out.println(pivotIndex(pivotArr));
 	}
 
 	/**
@@ -215,8 +217,8 @@ public class TestArray {
 		assert (nums != null || nums.length > 0);
 		Arrays.sort(nums);
 		for (int i = 0; i < nums.length; i++) {
-			if (i+1 < nums.length&&(nums[i] ^ nums[i+1]) == 0){
-				System.out.println("重复的是:"+nums[i]);
+			if (i + 1 < nums.length && (nums[i] ^ nums[i + 1]) == 0) {
+				System.out.println("重复的是:" + nums[i]);
 				return nums[i];
 			}
 		}
@@ -226,11 +228,29 @@ public class TestArray {
 
 	public static int missingNumber(int[] nums) {
 		int total = 0;
-		for(int i=0;i< nums.length;i++){
+		for (int i = 0; i < nums.length; i++) {
 			total += nums[i];
 		}
 		int theMax = nums.length;
-		int totalS = (theMax * (nums.length+1))/2;
+		int totalS = (theMax * (nums.length + 1)) / 2;
 		return totalS - total;
+	}
+
+	public static int pivotIndex(int[] nums) {
+		assert nums != null && nums.length > 0;
+		int sumL = 0;
+		int sumR = 0;
+		for (int i = 0; i < nums.length; i++) {
+			for (int j = i + 1; j < nums.length; j++) {
+				sumR += nums[j];
+			}
+			if (sumL == sumR) {
+				return i;
+			}else {
+				sumR = 0;
+			}
+			sumL += nums[i];
+		}
+		return -1;
 	}
 }
