@@ -18,6 +18,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class TestAtomic {
 	private static AtomicInteger cur = new AtomicInteger(0);
 	private static Semaphore semaphore = new Semaphore(5);
+
 	public static void main(String[] args) {
 		test();
 	}
@@ -25,23 +26,24 @@ public class TestAtomic {
 	public static void test() {
 		int number = 10;
 
-		ExecutorService exService = Executors.newFixedThreadPool(5);
+		ExecutorService exService = Executors.newFixedThreadPool(15);
 		while (cur.get() < number) {
 			try {
 				semaphore.acquire();
-//				log.info("acquired left:{}", semaphore.availablePermits());
+				exService.submit(new Runnable() {
+					@Override
+					public void run() {
+						if (cur.get() < number) {
+							log.info("{} cur:{} semaphone:{}", Thread.currentThread().getName(), cur.incrementAndGet(), semaphore.availablePermits());
+						}
+//					log.info("released semaphore left:{}", semaphore.availablePermits());
+					}
+				});
 			} catch (InterruptedException e) {
 				e.printStackTrace();
+			} finally {
+				semaphore.release();
 			}
-			exService.submit(new Runnable() {
-				@Override
-				public void run() {
-					log.info("{} cur:{} semaphone:{}", Thread.currentThread().getName(), cur.incrementAndGet(), semaphore.availablePermits());
-
-					semaphore.release();
-//					log.info("released semaphore left:{}", semaphore.availablePermits());
-				}
-			});
 		}
 		exService.shutdown();
 	}
