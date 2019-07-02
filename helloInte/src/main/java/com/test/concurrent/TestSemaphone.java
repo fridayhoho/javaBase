@@ -27,12 +27,18 @@ public class TestSemaphone {
 			@Override
 			public void run() {
 				try {
+					semaphore.acquire();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				semaphore.release();
 				log.info("release semaphone {}", semaphore.availablePermits());
+				semaphore.release();
+
 				semaphore.release();
 				log.info("release semaphone {}", semaphore.availablePermits());
 			}

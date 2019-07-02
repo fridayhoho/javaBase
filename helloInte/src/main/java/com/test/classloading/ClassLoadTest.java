@@ -16,7 +16,7 @@ public class ClassLoadTest {
 //		System.out.println("age: "+SonClass.age);
 //		SonClass[] sons = new SonClass[2];
 //		System.out.println(FatherClass.age);
-		System.out.println(FatherClass.addr);//常量池
+		System.out.println(FatherClass.addr);//chang'liang'chi
 	}
 
 
