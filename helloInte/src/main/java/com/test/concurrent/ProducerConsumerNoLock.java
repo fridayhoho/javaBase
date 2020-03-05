@@ -1,7 +1,7 @@
 package com.test.concurrent;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * ClassName: ProducerConsumerNoLock
@@ -15,9 +15,10 @@ public class ProducerConsumerNoLock {
 	 * 有多少钱
 	 */
 	private static int countsRMB = 0;
-
+	private  static Lock moneyLock = new ReentrantLock();
 	public static void main(String[] args) {
 		new Thread(new Producer()).start();
+
 		new Thread(new Consumer()).start();
 		new Thread(new Consumer()).start();
 		new Thread(new Consumer()).start();
@@ -45,9 +46,12 @@ public class ProducerConsumerNoLock {
 		@Override
 		public void run() {
 			while (true) {
+				moneyLock.lock();
 				if (countsRMB > 0) {
+					//线程切换
 					countsRMB--;
 				}
+				moneyLock.unlock();
 				System.out.println("consumer curRMB:"+ countsRMB);
 				try {
 					Thread.sleep(1);
