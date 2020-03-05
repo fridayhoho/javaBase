@@ -1,8 +1,13 @@
 package com.test.concurrent;
 
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.TimeUnit;
+import lombok.extern.slf4j.Slf4j;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.*;
 
 /**
  * ClassName: TryBlockingQueue
@@ -11,9 +16,15 @@ import java.util.concurrent.TimeUnit;
  * author     daguang
  * version    V1.0
  */
+@Slf4j
 public class TryBlockingQueue {
 	public static void main(String[] args) {
-		new TryBlockingQueue().testBlockingQueue();
+//		new TryBlockingQueue().testBoundSize();
+
+		BigDecimal bigDecimal = new BigDecimal("3456.3");
+		bigDecimal = bigDecimal.setScale(3, RoundingMode.FLOOR);
+
+		System.out.println(bigDecimal.floatValue());
 	}
 
 	public void testBlockingQueue() {
@@ -74,5 +85,34 @@ public class TryBlockingQueue {
 		new Thread(new Producer(queue)).start();
 
 //		new Thread(new Consumer(queue)).start();
+	}
+
+	private void testBoundSize() {
+		ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(2, 2, 0,
+				TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
+
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask() {
+
+			@Override
+			public void run() {
+				if (poolExecutor.getQueue().size() > 2){
+					return;
+				}
+				poolExecutor.execute(new Runnable() {
+					@Override
+					public void run() {
+						log.info(Thread.currentThread().getName());
+						try {
+							TimeUnit.SECONDS.sleep(1);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				});
+				log.info("task:{} active:{} completed:{}", poolExecutor.getTaskCount(), poolExecutor.getActiveCount(), poolExecutor.getCompletedTaskCount());
+
+			}
+		}, 0, 100);
 	}
 }
